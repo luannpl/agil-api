@@ -1,29 +1,26 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { BadRequestError, UnauthorizedError } from "../errors/HttpErrors.js";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { userRepository } from "../repositories/user.repository.js";
 
 export const userService = {
     async register(data) {
-        const existingUser = await prisma.user.findUnique({
-            where: { email: data.data.email }
-        });
+        const existingUser = await userRepository.findByEmail(data.email);
         if (existingUser) {
-            throw new BadRequestError("Email já está em uso");
+            throw new BadRequestError("Email already registered");
         }
-        const hashedPassword = await bcrypt.hash(data.data.password, 10);
-        data.data.password = hashedPassword;
-
-        const user = await prisma.user.create({ data: data.data });
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        data.password = hashedPassword;
+        const user = await userRepository.create(data);
+        if (!user) {
+            throw new BadRequestError("Error creating user");
+        }
         delete user.password;
         return user;
     },
 
-    async login(data) {
-        const user = await prisma.user.findUnique({
-            where: { email: data.email },
-        })
+    async login(data) { 
+        const user = await userRepository.findByEmail(data.email);
         if (!user) {
             throw new UnauthorizedError("Invalid email or password");
         }
@@ -40,5 +37,18 @@ export const userService = {
             token,
             user
         };
+    },
+
+    async me(userId) {
+        const user = await userRepository.findById(userId);
+        if (!user) {
+            throw new BadRequestError("User not found");
+        }
+        return user;
+    },
+
+    async getAllUsers() {
+        const users = await userRepository.getAllUsers();
+        return users;
     }
 }

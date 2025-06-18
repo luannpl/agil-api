@@ -33,5 +33,18 @@ export const userRepository = {
                 email: true
             }
         });
+    },
+
+    async update(id, data) {
+        return await prisma.user.update({
+            where: { id },
+            data
+        });
+    },
+
+    async delete(id) {
+        return await prisma.user.delete({
+            where: { id }
+        });
     }
 }

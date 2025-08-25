@@ -8,4 +8,14 @@ export const UserRepository = {
     });
     return user;
   },
+
+  async findAll() {
+    return await prisma.usuario.findMany();
+  },
+
+  async findByEmail(email: string) {
+    return await prisma.usuario.findUnique({
+      where: { email },
+    });
+  },
 };

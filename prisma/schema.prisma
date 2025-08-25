@@ -21,7 +21,7 @@ enum TipoUsuario {
 }
 
 model Usuario {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(uuid())
   nome      String
   email     String      @unique
   senha     String

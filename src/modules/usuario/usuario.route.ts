@@ -6,8 +6,6 @@ import { UserController } from "./usuario.controller";
 const router = Router();
 
 router.post("/", validate(CreateUserSchema), UserController.createUser);
-router.get("/", (req, res) => {
-  res.send("Rota de usuários funcionando!");
-});
+router.get("/", UserController.getAllUsers);
 
 export default router;

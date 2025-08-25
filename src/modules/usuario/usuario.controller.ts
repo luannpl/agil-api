@@ -15,4 +15,17 @@ export const UserController = {
       res.status(500).json({ error: error.message || "Internal Server Error" });
     }
   },
+
+  async getAllUsers(req: Request, res: Response) {
+    try {
+      const users = await UserService.getAllUsers();
+      res.status(200).json(users);
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
 };

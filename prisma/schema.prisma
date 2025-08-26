@@ -32,3 +32,40 @@ model Usuario {
 
   @@map("agil_usuarios")
 }
+
+enum TipoVeiculo {
+  carro
+  moto
+  caminhao
+  onibus
+  bicicleta
+  outros
+}
+
+enum Sistema {
+  manual
+  automatico
+  semi_automatico
+  cvt
+  carburador
+  injetado
+}
+
+model Veiculo {
+  id            Int         @id @default(autoincrement())
+  nome          String
+  descricao     String
+  marca         String
+  ano           Int
+  placa         String      @unique
+  valor         Float
+  cor           String
+  quilometragem Int
+  tipo          TipoVeiculo
+  sistema       Sistema
+  imagem        String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("agil_veiculos")
+}

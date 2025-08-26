@@ -1,0 +1,57 @@
+import { Sistema, TipoVeiculo } from "@prisma/client";
+import z from "zod";
+
+export const CreateVeiculoSchema = z.object({
+  nome: z
+    .string({
+      required_error: "Nome é obrigatório",
+    })
+    .min(1, "Nome é obrigatório"),
+
+  descricao: z
+    .string({
+      required_error: "Descrição é obrigatória",
+    })
+    .min(1, "Descrição deve ter no mínimo 1 caracteres"),
+
+  marca: z
+    .string({
+      required_error: "Marca é obrigatória",
+    })
+    .min(1, "Marca deve ter no mínimo 1 caracteres"),
+
+  ano: z.coerce
+    .number({
+      required_error: "Ano é obrigatório",
+    })
+    .min(1886, "Ano deve ser maior ou igual a 1886"),
+  placa: z
+    .string({
+      required_error: "Placa é obrigatória",
+    })
+    .min(1, "Placa deve ter no mínimo 1 caracteres"),
+  valor: z.coerce
+    .number({
+      required_error: "Valor é obrigatório",
+    })
+    .min(0, "Valor deve ser maior ou igual a 0"),
+  cor: z
+    .string({
+      required_error: "Cor é obrigatória",
+    })
+    .min(1, "Cor deve ter no mínimo 1 caracteres"),
+  quilometragem: z.coerce
+    .number({
+      required_error: "Quilometragem é obrigatória",
+    })
+    .min(0, "Quilometragem deve ser maior ou igual a 0"),
+  tipo: z.nativeEnum(TipoVeiculo, {
+    required_error: "Tipo de veículo é obrigatório",
+    invalid_type_error: "Tipo de veículo inválido",
+  }),
+  sistema: z.nativeEnum(Sistema, {
+    required_error: "Sistema é obrigatório",
+    invalid_type_error: "Sistema inválido",
+  }),
+  imagem: z.string().optional(),
+});

@@ -1,6 +1,6 @@
 # Agil API
 
-API para o sistema Agil
+API para o sistema Agil.
 
 ## Tecnologias Utilizadas
 

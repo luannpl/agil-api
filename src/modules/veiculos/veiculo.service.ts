@@ -1,7 +1,7 @@
 import { VeiculosRepository } from "./veiculo.repository";
 import { CreateVeiculoDto } from "./dto/createVeiculo.dto";
 import { supabase } from "../../lib/supabase";
-import { BadRequestError } from "../../errors/HttpErrors";
+import { BadRequestError, ConflictError } from "../../errors/HttpErrors";
 
 export const VeiculosService = {
   async getAllVeiculos() {
@@ -13,6 +13,12 @@ export const VeiculosService = {
     veiculoData: CreateVeiculoDto,
     file?: Express.Multer.File
   ) {
+    const existingVeiculo = await VeiculosRepository.findByPlaca(
+      veiculoData.placa
+    );
+    if (existingVeiculo) {
+      throw new ConflictError("Veículo já cadastrado");
+    }
     veiculoData.imagem = "Sem imagem";
     if (file) {
       const filePath = `veiculos/${veiculoData.placa}-${file.originalname}`;
@@ -25,7 +31,7 @@ export const VeiculosService = {
       if (uploadError) {
         throw new BadRequestError("Error uploading veiculos");
       }
-      veiculoData.imagem = data.path;
+      veiculoData.imagem = `https://vxkqmhgtbqvffwbgzxyq.supabase.co/storage/v1/object/public/veiculos/${filePath}`;
     }
     const veiculo = await VeiculosRepository.create(veiculoData);
     return veiculo;

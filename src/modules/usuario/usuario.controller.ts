@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { HttpError } from "../../errors/HttpErrors";
-import { UserService } from "./usuario.service";
+import { HttpError } from "../../errors/HttpErrors.js";
+import { UserService } from "./usuario.service.js";
 
 export const UserController = {
   async createUser(req: Request, res: Response) {

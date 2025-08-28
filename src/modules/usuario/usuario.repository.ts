@@ -1,5 +1,5 @@
-import { prisma } from "../../prisma/client";
-import { CreateUserDto } from "./dto/createUser.dto";
+import { prisma } from "../../prisma/client.js";
+import { CreateUserDto } from "./dto/createUser.dto.js";
 
 export const UserRepository = {
   async create(data: CreateUserDto) {

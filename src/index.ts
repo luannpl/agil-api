@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import UserRoutes from "./modules/usuario/usuario.route";
-import { conditionalBodyParser } from "./middlewares/conditionalBodyParser";
-import { VeiculosRoutes } from "./modules/veiculos/veiculo.route";
+import UserRoutes from "./modules/usuario/usuario.route.js";
+import { conditionalBodyParser } from "./middlewares/conditionalBodyParser.js";
+import { VeiculosRoutes } from "./modules/veiculos/veiculo.route.js";
 dotenv.config();
 
 const app = express();

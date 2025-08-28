@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
-import { UnauthorizedError } from "../errors/HttpErrors";
+import { UnauthorizedError } from "../errors/HttpErrors.js";
 
 dotenv.config();
 

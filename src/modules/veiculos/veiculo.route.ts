@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { VeiculosController } from "./veiculo.controller";
-import { upload } from "../../middlewares/uploadMiddleware";
-import { validate } from "../../middlewares/validate";
-import { CreateVeiculoSchema } from "./schemas/createVeiculo.schema";
+import { VeiculosController } from "./veiculo.controller.js";
+import { upload } from "../../middlewares/uploadMiddleware.js";
+import { validate } from "../../middlewares/validate.js";
+import { CreateVeiculoSchema } from "./schemas/createVeiculo.schema.js";
 
 export const VeiculosRoutes = Router();
 

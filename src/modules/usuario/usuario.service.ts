@@ -1,8 +1,8 @@
-import { ConflictError } from "../../errors/HttpErrors";
-import { User } from "../../types/User";
-import { hashPassword } from "../../utils/hash";
-import { CreateUserDto } from "./dto/createUser.dto";
-import { UserRepository } from "./usuario.repository";
+import { ConflictError } from "../../errors/HttpErrors.js";
+import { User } from "../../types/User.js";
+import { hashPassword } from "../../utils/hash.js";
+import { CreateUserDto } from "./dto/createUser.dto.js";
+import { UserRepository } from "./usuario.repository.js";
 
 export const UserService = {
   async createUser(data: CreateUserDto) {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { VeiculosService } from "./veiculo.service";
-import { HttpError } from "../../errors/HttpErrors";
+import { VeiculosService } from "./veiculo.service.js";
+import { HttpError } from "../../errors/HttpErrors.js";
 
 export const VeiculosController = {
   async getAllVeiculos(_: Request, res: Response) {

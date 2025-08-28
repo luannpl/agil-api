@@ -1,7 +1,7 @@
-import { VeiculosRepository } from "./veiculo.repository";
-import { CreateVeiculoDto } from "./dto/createVeiculo.dto";
-import { supabase } from "../../lib/supabase";
-import { BadRequestError, ConflictError } from "../../errors/HttpErrors";
+import { VeiculosRepository } from "./veiculo.repository.js";
+import { CreateVeiculoDto } from "./dto/createVeiculo.dto.js";
+import { supabase } from "../../lib/supabase.js";
+import { BadRequestError, ConflictError } from "../../errors/HttpErrors.js";
 
 export const VeiculosService = {
   async getAllVeiculos() {

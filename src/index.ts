@@ -13,7 +13,7 @@ app.use(cors());
 app.use(conditionalBodyParser);
 
 app.get("/", (_, res) => {
-  res.send("Bem-vindo à API Agil!");
+  res.send("Bem-vindo à API Agil!!!");
 });
 
 app.use("/usuarios", UserRoutes);

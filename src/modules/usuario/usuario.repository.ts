@@ -13,6 +13,12 @@ export const UserRepository = {
     return await prisma.usuario.findMany();
   },
 
+  async findById(id: string) {
+    return await prisma.usuario.findUnique({
+      where: { id },
+    });
+  },
+
   async findByEmail(email: string) {
     return await prisma.usuario.findUnique({
       where: { email },

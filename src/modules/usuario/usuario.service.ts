@@ -1,4 +1,4 @@
-import { ConflictError } from "../../errors/HttpErrors.js";
+import { ConflictError, NotFoundError } from "../../errors/HttpErrors.js";
 import { User } from "../../types/User.js";
 import { hashPassword } from "../../utils/hash.js";
 import { CreateUserDto } from "./dto/createUser.dto.js";
@@ -21,5 +21,14 @@ export const UserService = {
     return users.map(
       ({ senha, ...userWithoutPassword }) => userWithoutPassword
     );
+  },
+
+  async getMe(userId: string) {
+    const user = await UserRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundError("User não encontrado");
+    }
+    const { senha, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   },
 };

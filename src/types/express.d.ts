@@ -1,4 +1,4 @@
-import { DecodedToken } from "./jwt";
+import { DecodedToken } from "./jwt.js";
 
 declare global {
   namespace Express {

@@ -6,12 +6,13 @@ import UserRoutes from "./modules/usuario/usuario.route.js";
 import { conditionalBodyParser } from "./middlewares/conditionalBodyParser.js";
 import { VeiculosRoutes } from "./modules/veiculos/veiculo.route.js";
 import AuthRoutes from "./modules/auth/auth.route.js";
+import { corsOptions } from "./config/cors.js";
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(conditionalBodyParser);
 app.use(cookieParser());
 

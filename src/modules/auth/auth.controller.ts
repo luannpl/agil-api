@@ -61,7 +61,14 @@ export const refresh = async (req: Request, res: Response) => {
 };
 
 export const logout = (_: Request, res: Response) => {
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
-  res.json({ message: "Logout bem-sucedido" });
+  const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none" as const,
+  };
+
+  res.clearCookie("accessToken", cookieOptions);
+  res.clearCookie("refreshToken", cookieOptions);
+
+  return res.status(200).json({ message: "Logout bem-sucedido" });
 };

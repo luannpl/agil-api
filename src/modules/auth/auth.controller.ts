@@ -27,16 +27,15 @@ export const login = async (req: Request, res: Response) => {
   const accessToken = generateAccessToken(user.id);
   const refreshToken = generateRefreshToken(user.id);
 
-  const isProduction = process.env.NODE_ENV === "production";
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   });
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   });
 
   res.json({ message: "Login bem-sucedido" });

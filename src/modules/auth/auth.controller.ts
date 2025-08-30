@@ -51,8 +51,8 @@ export const refresh = async (req: Request, res: Response) => {
 
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
     });
     return res.json({ message: "Token renovado" });
   } catch {

@@ -45,6 +45,11 @@ export const CreateVeiculoSchema = z.object({
       required_error: "Quilometragem é obrigatória",
     })
     .min(0, "Quilometragem deve ser maior ou igual a 0"),
+  vendido: z
+    .boolean({
+      required_error: "Vendido é obrigatório",
+    })
+    .default(false),
   tipo: z.nativeEnum(TipoVeiculo, {
     required_error: "Tipo de veículo é obrigatório",
     invalid_type_error: "Tipo de veículo inválido",

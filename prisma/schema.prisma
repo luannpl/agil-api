@@ -29,6 +29,7 @@ model Usuario {
   tipo      TipoUsuario
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+  Veiculo   Veiculo[]
 
   @@map("agil_usuarios")
 }
@@ -61,6 +62,9 @@ model Veiculo {
   valor         Float
   cor           String
   quilometragem Int
+  vendido       Boolean     @default(false)
+  usuarioId     String?
+  usuario       Usuario?    @relation(fields: [usuarioId], references: [id])
   tipo          TipoVeiculo
   sistema       Sistema
   imagem        String

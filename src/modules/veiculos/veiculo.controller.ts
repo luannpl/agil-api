@@ -20,6 +20,7 @@ export const VeiculosController = {
     try {
       const veiculo = await VeiculosService.createVeiculo(
         req.body,
+        req.user!.id,
         req.file as Express.Multer.File | undefined
       );
       res.status(201).json(veiculo);

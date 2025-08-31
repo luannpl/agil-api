@@ -11,6 +11,7 @@ export const VeiculosService = {
 
   async createVeiculo(
     veiculoData: CreateVeiculoDto,
+    usuarioId: string,
     file?: Express.Multer.File
   ) {
     const existingVeiculo = await VeiculosRepository.findByPlaca(
@@ -33,7 +34,7 @@ export const VeiculosService = {
       }
       veiculoData.imagem = `https://vxkqmhgtbqvffwbgzxyq.supabase.co/storage/v1/object/public/veiculos/${filePath}`;
     }
-    const veiculo = await VeiculosRepository.create(veiculoData);
+    const veiculo = await VeiculosRepository.create({ ...veiculoData, usuarioId });
     return veiculo;
   },
 };

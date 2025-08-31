@@ -1,14 +1,13 @@
 import { VeiculosRepository } from "./veiculo.repository.js";
 import { CreateVeiculoDto } from "./dto/createVeiculo.dto.js";
 import { supabase } from "../../lib/supabase.js";
-import { BadRequestError, ConflictError } from "../../errors/HttpErrors.js";
+import {
+  BadRequestError,
+  ConflictError,
+  NotFoundError,
+} from "../../errors/HttpErrors.js";
 
 export const VeiculosService = {
-  async getAllVeiculos() {
-    const veiculos = await VeiculosRepository.findAll();
-    return veiculos;
-  },
-
   async createVeiculo(
     veiculoData: CreateVeiculoDto,
     usuarioId: string,
@@ -34,7 +33,23 @@ export const VeiculosService = {
       }
       veiculoData.imagem = `https://vxkqmhgtbqvffwbgzxyq.supabase.co/storage/v1/object/public/veiculos/${filePath}`;
     }
-    const veiculo = await VeiculosRepository.create({ ...veiculoData, usuarioId });
+    const veiculo = await VeiculosRepository.create({
+      ...veiculoData,
+      usuarioId,
+    });
+    return veiculo;
+  },
+
+  async getAllVeiculos() {
+    const veiculos = await VeiculosRepository.findAll();
+    return veiculos;
+  },
+
+  async getVeiculoById(id: number) {
+    const veiculo = await VeiculosRepository.findById(id);
+    if (!veiculo) {
+      throw new NotFoundError("Veículo não encontrado");
+    }
     return veiculo;
   },
 };

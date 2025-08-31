@@ -15,3 +15,4 @@ VeiculosRoutes.post(
   VeiculosController.createVeiculo
 );
 VeiculosRoutes.get("/", VeiculosController.getAllVeiculos);
+VeiculosRoutes.get("/:id", VeiculosController.getVeiculoById);

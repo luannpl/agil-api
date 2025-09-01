@@ -16,3 +16,4 @@ VeiculosRoutes.post(
 );
 VeiculosRoutes.get("/", VeiculosController.getAllVeiculos);
 VeiculosRoutes.get("/:id", VeiculosController.getVeiculoById);
+VeiculosRoutes.delete("/:id", authenticate, VeiculosController.deleteVeiculo);

@@ -20,4 +20,10 @@ export const VeiculosRepository = {
       where: { placa },
     });
   },
+
+  async delete(id: number) {
+    return await prisma.veiculo.delete({
+      where: { id },
+    });
+  },
 };

@@ -52,4 +52,12 @@ export const VeiculosService = {
     }
     return veiculo;
   },
+
+  async deleteVeiculo(id: number) {
+    const veiculo = await VeiculosRepository.findById(id);
+    if (!veiculo) {
+      throw new NotFoundError("Veículo não encontrado");
+    }
+    await VeiculosRepository.delete(id);
+  },
 };

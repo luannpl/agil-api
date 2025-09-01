@@ -43,4 +43,17 @@ export const VeiculosController = {
       res.status(500).json({ error: error.message || "Internal Server Error" });
     }
   },
+
+  async deleteVeiculo(req: Request, res: Response) {
+    try {
+      await VeiculosService.deleteVeiculo(+req.params.id);
+      res.status(204).send();
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
 };

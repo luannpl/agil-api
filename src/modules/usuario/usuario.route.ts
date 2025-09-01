@@ -6,8 +6,13 @@ import { authenticate } from "../../middlewares/authenticate.js";
 
 const router = Router();
 
-router.post("/", validate(CreateUserSchema), UserController.createUser);
-router.get("/", UserController.getAllUsers);
+router.post(
+  "/",
+  authenticate,
+  validate(CreateUserSchema),
+  UserController.createUser
+);
+router.get("/", authenticate, UserController.getAllUsers);
 router.get("/me", authenticate, UserController.getMe);
 
 export default router;

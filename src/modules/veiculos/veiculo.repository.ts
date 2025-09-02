@@ -15,6 +15,13 @@ export const VeiculosRepository = {
     });
   },
 
+  async findDestaques() {
+    return await prisma.veiculo.findMany({
+      orderBy: [{ valor: "desc" }, { ano: "desc" }],
+      take: 4,
+    });
+  },
+
   async findByPlaca(placa: string) {
     return await prisma.veiculo.findUnique({
       where: { placa },

@@ -44,6 +44,19 @@ export const VeiculosController = {
     }
   },
 
+  async getDestaques(req: Request, res: Response) {
+    try {
+      const destaques = await VeiculosService.getDestaques();
+      res.status(200).json(destaques);
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
+
   async deleteVeiculo(req: Request, res: Response) {
     try {
       await VeiculosService.deleteVeiculo(+req.params.id);

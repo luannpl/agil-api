@@ -6,6 +6,7 @@ import {
   ConflictError,
   NotFoundError,
 } from "../../errors/HttpErrors.js";
+import { get } from "http";
 
 export const VeiculosService = {
   async createVeiculo(
@@ -51,6 +52,11 @@ export const VeiculosService = {
       throw new NotFoundError("Veículo não encontrado");
     }
     return veiculo;
+  },
+
+  async getDestaques() {
+    const destaques = await VeiculosRepository.findDestaques();
+    return destaques;
   },
 
   async deleteVeiculo(id: number) {

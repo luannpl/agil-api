@@ -31,4 +31,21 @@ export const UserService = {
     const { senha, ...userWithoutPassword } = user;
     return userWithoutPassword;
   },
+
+  async getUserById(userId: string) {
+    const user = await UserRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundError("User não encontrado");
+    }
+    const { senha, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+  },
+
+  async deleteUser(userId: string) {
+    const user = await UserRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundError("User não encontrado");
+    }
+    await UserRepository.delete(userId);
+  },
 };

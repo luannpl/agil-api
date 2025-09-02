@@ -24,4 +24,10 @@ export const UserRepository = {
       where: { email },
     });
   },
+
+  async delete(id: string) {
+    return await prisma.usuario.delete({
+      where: { id },
+    });
+  },
 };

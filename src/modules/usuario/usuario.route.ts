@@ -14,5 +14,7 @@ router.post(
 );
 router.get("/", authenticate, UserController.getAllUsers);
 router.get("/me", authenticate, UserController.getMe);
+router.get("/:id", authenticate, UserController.getUserById);
+router.delete("/:id", authenticate, UserController.deleteUser);
 
 export default router;

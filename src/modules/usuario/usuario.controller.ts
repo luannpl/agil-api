@@ -58,6 +58,22 @@ export const UserController = {
     }
   },
 
+  async updateUser(req: Request, res: Response) {
+    try {
+      if (!req.user) {
+        throw new UnauthorizedError("Usuário não autenticado");
+      }
+      const user = await UserService.updateUser(req.user.id, req.body);
+      res.status(200).json(user);
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
+
   async deleteUser(req: Request, res: Response) {
     try {
       await UserService.deleteUser(req.params.id);

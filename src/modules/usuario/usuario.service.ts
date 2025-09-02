@@ -2,6 +2,7 @@ import { ConflictError, NotFoundError } from "../../errors/HttpErrors.js";
 import { User } from "../../types/User.js";
 import { hashPassword } from "../../utils/hash.js";
 import { CreateUserDto } from "./dto/createUser.dto.js";
+import { UpdateUserDto } from "./dto/updateUser.dto.js";
 import { UserRepository } from "./usuario.repository.js";
 
 export const UserService = {
@@ -38,6 +39,16 @@ export const UserService = {
       throw new NotFoundError("User não encontrado");
     }
     const { senha, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+  },
+
+  async updateUser(userId: string, data: UpdateUserDto) {
+    const user = await UserRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundError("User não encontrado");
+    }
+    const updatedUser = await UserRepository.update(userId, data);
+    const { senha, ...userWithoutPassword } = updatedUser;
     return userWithoutPassword;
   },
 

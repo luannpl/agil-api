@@ -3,6 +3,7 @@ import { validate } from "../../middlewares/validate.js";
 import { CreateUserSchema } from "./schemas/createUser.schema.js";
 import { UserController } from "./usuario.controller.js";
 import { authenticate } from "../../middlewares/authenticate.js";
+import { UpdateUserSchema } from "./schemas/updateUser.schema.js";
 
 const router = Router();
 
@@ -15,6 +16,12 @@ router.post(
 router.get("/", authenticate, UserController.getAllUsers);
 router.get("/me", authenticate, UserController.getMe);
 router.get("/:id", authenticate, UserController.getUserById);
+router.put(
+  "/",
+  authenticate,
+  validate(UpdateUserSchema),
+  UserController.updateUser
+);
 router.delete("/:id", authenticate, UserController.deleteUser);
 
 export default router;

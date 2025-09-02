@@ -1,4 +1,4 @@
-import { Sistema, TipoVeiculo } from "@prisma/client";
+import { Combustivel, Sistema, TipoVeiculo } from "@prisma/client";
 import z from "zod";
 
 export const CreateVeiculoSchema = z.object({
@@ -40,6 +40,7 @@ export const CreateVeiculoSchema = z.object({
       required_error: "Cor é obrigatória",
     })
     .min(1, "Cor deve ter no mínimo 1 caracteres"),
+  localizacao: z.string().optional(),
   quilometragem: z.coerce
     .number({
       required_error: "Quilometragem é obrigatória",
@@ -57,6 +58,10 @@ export const CreateVeiculoSchema = z.object({
   sistema: z.nativeEnum(Sistema, {
     required_error: "Sistema é obrigatório",
     invalid_type_error: "Sistema inválido",
+  }),
+  combustivel: z.nativeEnum(Combustivel, {
+    required_error: "Combustível é obrigatório",
+    invalid_type_error: "Combustível inválido",
   }),
   imagem: z.string().optional(),
 });

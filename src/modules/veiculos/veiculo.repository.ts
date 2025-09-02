@@ -6,7 +6,19 @@ export const VeiculosRepository = {
   },
 
   async findAll() {
-    return await prisma.veiculo.findMany();
+    return await prisma.veiculo.findMany({
+      include: {
+        usuario: {
+          select: {
+            id: true,
+            nome: true,
+            email: true,
+            telefone: true,
+            tipo: true,
+          },
+        },
+      },
+    });
   },
 
   async findById(id: number) {

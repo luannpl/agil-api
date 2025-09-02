@@ -6,7 +6,6 @@ import {
   ConflictError,
   NotFoundError,
 } from "../../errors/HttpErrors.js";
-import { get } from "http";
 
 export const VeiculosService = {
   async createVeiculo(

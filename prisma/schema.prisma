@@ -25,6 +25,7 @@ model Usuario {
   id        String      @id @default(uuid())
   nome      String
   email     String      @unique
+  telefone  String?
   senha     String
   tipo      TipoUsuario
   createdAt DateTime    @default(now())
@@ -52,24 +53,35 @@ enum Sistema {
   injetado
 }
 
+enum Combustivel {
+  gasolina
+  alcool
+  diesel
+  elétrico
+  flex
+  hibrido
+}
+
 model Veiculo {
-  id            Int         @id @default(autoincrement())
+  id            Int          @id @default(autoincrement())
   nome          String
   descricao     String
   marca         String
   ano           Int
-  placa         String      @unique
+  placa         String       @unique
   valor         Float
   cor           String
   quilometragem Int
-  vendido       Boolean     @default(false)
+  localizacao   String?      @default("Fortaleza")
+  vendido       Boolean      @default(false)
   usuarioId     String?
-  usuario       Usuario?    @relation(fields: [usuarioId], references: [id])
+  usuario       Usuario?     @relation(fields: [usuarioId], references: [id])
   tipo          TipoVeiculo
+  combustivel   Combustivel? @default(gasolina)
   sistema       Sistema
   imagem        String
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 
   @@map("agil_veiculos")
 }

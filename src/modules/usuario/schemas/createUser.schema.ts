@@ -15,6 +15,12 @@ export const CreateUserSchema = z.object({
     })
     .email("Formato de e-mail inválido"),
 
+  telefone: z
+    .string({
+      required_error: "Telefone é obrigatório",
+    })
+    .min(1, "Telefone deve ter no mínimo 1 caracteres"),
+
   senha: z
     .string({
       required_error: "Senha é obrigatória",

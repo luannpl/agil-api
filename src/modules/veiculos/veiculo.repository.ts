@@ -24,6 +24,17 @@ export const VeiculosRepository = {
   async findById(id: number) {
     return await prisma.veiculo.findUnique({
       where: { id },
+      include: {
+        usuario: {
+          select: {
+            id: true,
+            nome: true,
+            email: true,
+            telefone: true,
+            tipo: true,
+          },
+        },
+      },
     });
   },
 

@@ -85,3 +85,15 @@ model Veiculo {
 
   @@map("agil_veiculos")
 }
+
+model Contato {
+  id        String   @id @default(uuid())
+  nome      String
+  email     String   @unique
+  telefone  String?
+  mensagem  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("agil_contatos")
+}

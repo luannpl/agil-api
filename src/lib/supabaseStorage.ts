@@ -1,5 +1,5 @@
-import { BadRequestError } from "../errors/HttpErrors";
-import { supabase } from "./supabase";
+import { BadRequestError } from "../errors/HttpErrors.js";
+import { supabase } from "./supabase.js";
 
 export const uploadFile = async (
   bucket: string,

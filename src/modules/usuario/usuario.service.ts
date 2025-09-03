@@ -47,6 +47,13 @@ export const UserService = {
     if (!user) {
       throw new NotFoundError("User não encontrado");
     }
+    if (data.email && data.email !== user.email) {
+      const existingUser = await UserRepository.findByEmail(data.email);
+      if (existingUser) {
+        throw new ConflictError("Email já cadastrado");
+      }
+    }
+    data.senha = data.senha ? await hashPassword(data.senha) : user.senha;
     const updatedUser = await UserRepository.update(userId, data);
     const { senha, ...userWithoutPassword } = updatedUser;
     return userWithoutPassword;

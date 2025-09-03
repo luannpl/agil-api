@@ -1,11 +1,6 @@
 import { VeiculosRepository } from "./veiculo.repository.js";
 import { CreateVeiculoDto } from "./dto/createVeiculo.dto.js";
-import { supabase } from "../../lib/supabase.js";
-import {
-  BadRequestError,
-  ConflictError,
-  NotFoundError,
-} from "../../errors/HttpErrors.js";
+import { ConflictError, NotFoundError } from "../../errors/HttpErrors.js";
 import { deleteFile, uploadFile } from "../../lib/supabaseStorage.js";
 
 export const VeiculosService = {
@@ -23,7 +18,12 @@ export const VeiculosService = {
     veiculoData.imagem = "Sem imagem";
     if (file) {
       const newFileName = `${veiculoData.placa}-${file.originalname}`;
-      veiculoData.imagem = await uploadFile("veiculos", newFileName, file.buffer, file.mimetype);
+      veiculoData.imagem = await uploadFile(
+        "veiculos",
+        newFileName,
+        file.buffer,
+        file.mimetype
+      );
     }
     const veiculo = await VeiculosRepository.create({
       ...veiculoData,
@@ -62,5 +62,5 @@ export const VeiculosService = {
       await deleteFile("veiculos", filePath);
     }
     await VeiculosRepository.delete(id);
-  }
+  },
 };

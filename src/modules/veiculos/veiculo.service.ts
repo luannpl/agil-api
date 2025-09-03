@@ -6,6 +6,7 @@ import {
   ConflictError,
   NotFoundError,
 } from "../../errors/HttpErrors.js";
+import { deleteFile, uploadFile } from "../../lib/supabaseStorage.js";
 
 export const VeiculosService = {
   async createVeiculo(
@@ -21,17 +22,8 @@ export const VeiculosService = {
     }
     veiculoData.imagem = "Sem imagem";
     if (file) {
-      const filePath = `veiculos/${veiculoData.placa}-${file.originalname}`;
-      const { data, error: uploadError } = await supabase.storage
-        .from("veiculos")
-        .upload(filePath, file.buffer, {
-          contentType: file.mimetype,
-          upsert: true,
-        });
-      if (uploadError) {
-        throw new BadRequestError("Error uploading veiculos");
-      }
-      veiculoData.imagem = `https://vxkqmhgtbqvffwbgzxyq.supabase.co/storage/v1/object/public/veiculos/${filePath}`;
+      const newFileName = `${veiculoData.placa}-${file.originalname}`;
+      veiculoData.imagem = await uploadFile("veiculos", newFileName, file.buffer, file.mimetype);
     }
     const veiculo = await VeiculosRepository.create({
       ...veiculoData,
@@ -63,6 +55,12 @@ export const VeiculosService = {
     if (!veiculo) {
       throw new NotFoundError("Veículo não encontrado");
     }
+    if (veiculo.imagem && veiculo.imagem !== "Sem imagem") {
+      const fileUrl = veiculo.imagem;
+      const filePath = fileUrl.split("/veiculos/")[1];
+
+      await deleteFile("veiculos", filePath);
+    }
     await VeiculosRepository.delete(id);
-  },
+  }
 };

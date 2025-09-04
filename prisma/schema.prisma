@@ -92,6 +92,7 @@ model Contato {
   email     String   @unique
   telefone  String?
   mensagem  String
+  lida      Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

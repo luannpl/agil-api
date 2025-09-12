@@ -2,11 +2,45 @@ import { prisma } from "../../prisma/client.js";
 import { CreateUserDto } from "./dto/createUser.dto.js";
 
 export const UserRepository = {
-  async create(data: CreateUserDto) {
-    const user = await prisma.usuario.create({
-      data,
+  async findClienteByCpf(cpf: string) {
+    return prisma.clienteProfile.findUnique({ where: { cpf } });
+  },
+
+  async findClienteByRg(rg: string) {
+    if (!rg) return null;
+    return prisma.clienteProfile.findUnique({ where: { rg } });
+  },
+
+  async findClienteByCnh(cnh: string) {
+    if (!cnh) return null;
+    return prisma.clienteProfile.findUnique({ where: { cnh } });
+  },
+
+  async createUserWithProfile(data: CreateUserDto) {
+    // Apenas criação dentro da transação
+    return prisma.$transaction(async (tx) => {
+      const user = await tx.usuario.create({
+        data: {
+          nome: data.nome,
+          email: data.email,
+          telefone: data.telefone,
+          senha: data.senha,
+          tipo: data.tipo,
+        },
+      });
+
+      let clienteProfile = null;
+      if (user.tipo === "cliente" && data.clienteProfile) {
+        clienteProfile = await tx.clienteProfile.create({
+          data: {
+            ...data.clienteProfile,
+            usuario: { connect: { id: user.id } },
+          },
+        });
+      }
+
+      return { user, clienteProfile };
     });
-    return user;
   },
 
   async findAll() {

@@ -22,17 +22,34 @@ enum TipoUsuario {
 }
 
 model Usuario {
-  id        String      @id @default(uuid())
+  id        String          @id @default(uuid())
   nome      String
-  email     String      @unique
+  email     String          @unique
   telefone  String?
   senha     String
   tipo      TipoUsuario
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
   Veiculo   Veiculo[]
+  Cliente   ClienteProfile?
 
   @@map("agil_usuarios")
+}
+
+model ClienteProfile {
+  id        String   @id @default(uuid())
+  cpf       String   @unique
+  rg        String?  @unique
+  cnh       String?  @unique
+  cep       String
+  endereco  String
+  descricao String
+  usuarioId String   @unique
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("agil_clientes")
 }
 
 enum TipoVeiculo {

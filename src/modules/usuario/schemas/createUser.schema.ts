@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { TipoUsuario } from "@prisma/client";
+import { CreateProfileClienteSchema } from "./profile/createProfileCliente.schema.js";
 
 // Schema para criação de usuário
 export const CreateUserSchema = z.object({
@@ -31,4 +32,6 @@ export const CreateUserSchema = z.object({
     required_error: "Tipo de usuário é obrigatório",
     invalid_type_error: "Tipo de usuário inválido",
   }),
+
+  clienteProfile: CreateProfileClienteSchema.optional(),
 });

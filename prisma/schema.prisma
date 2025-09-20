@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,25 +8,71 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model Usuario {
+  id          String      @id @default(uuid())
+  nome        String
+  email       String      @unique
+  telefone    String?
+  senha       String
+  tipo        TipoUsuario
+  dataNasc    DateTime?
+  cpf         String?     @unique
+  rg          String?     @unique
+  cnh         String?     @unique
+  cep         String?
+  endereco    String?
+  numero      String?
+  complemento String?
+  descricao   String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  Veiculo     Veiculo[]
+
+  @@map("agil_usuarios")
+}
+
+model Veiculo {
+  id            Int          @id @default(autoincrement())
+  nome          String
+  descricao     String
+  marca         String
+  ano           Int
+  placa         String       @unique
+  valor         Float
+  cor           String
+  quilometragem Int
+  tipo          TipoVeiculo
+  sistema       Sistema
+  imagem        String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  usuarioId     String?
+  vendido       Boolean      @default(false)
+  combustivel   Combustivel? @default(gasolina)
+  localizacao   String?      @default("Fortaleza")
+  usuario       Usuario?     @relation(fields: [usuarioId], references: [id])
+
+  @@map("agil_veiculos")
+}
+
+model Contato {
+  id        String   @id @default(uuid())
+  nome      String
+  email     String
+  telefone  String?
+  mensagem  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lida      Boolean  @default(false)
+
+  @@map("agil_contatos")
+}
+
 enum TipoUsuario {
   admin
   cliente
   despachante
   vendedor
-}
-
-model Usuario {
-  id        String      @id @default(uuid())
-  nome      String
-  email     String      @unique
-  telefone  String?
-  senha     String
-  tipo      TipoUsuario
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  Veiculo   Veiculo[]
-
-  @@map("agil_usuarios")
 }
 
 enum TipoVeiculo {
@@ -57,44 +97,7 @@ enum Combustivel {
   gasolina
   alcool
   diesel
-  elétrico
   flex
   hibrido
-}
-
-model Veiculo {
-  id            Int          @id @default(autoincrement())
-  nome          String
-  descricao     String
-  marca         String
-  ano           Int
-  placa         String       @unique
-  valor         Float
-  cor           String
-  quilometragem Int
-  localizacao   String?      @default("Fortaleza")
-  vendido       Boolean      @default(false)
-  usuarioId     String?
-  usuario       Usuario?     @relation(fields: [usuarioId], references: [id])
-  tipo          TipoVeiculo
-  combustivel   Combustivel? @default(gasolina)
-  sistema       Sistema
-  imagem        String
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-
-  @@map("agil_veiculos")
-}
-
-model Contato {
-  id        String   @id @default(uuid())
-  nome      String
-  email     String
-  telefone  String?
-  mensagem  String
-  lida      Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("agil_contatos")
+  eletrico @map("elétrico")
 }

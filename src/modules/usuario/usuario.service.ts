@@ -11,7 +11,17 @@ export const UserService = {
     if (existingUser) {
       throw new ConflictError("Email já cadastrado");
     }
+    if (data.cpf && (await UserRepository.findByCpf(data.cpf))) {
+      throw new ConflictError("CPF já cadastrado");
+    }
+    if (data.rg && (await UserRepository.findByRg(data.rg))) {
+      throw new ConflictError("RG já cadastrado");
+    }
+    if (data.cnh && (await UserRepository.findByCnh(data.cnh))) {
+      throw new ConflictError("CNH já cadastrado");
+    }
     data.senha = await hashPassword(data.senha);
+    data.dataNasc = data.dataNasc ? new Date(data.dataNasc) : undefined;
     const user: User = await UserRepository.create(data);
     const { senha, ...userWithoutPassword } = user;
     return userWithoutPassword;

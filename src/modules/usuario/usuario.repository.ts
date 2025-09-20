@@ -25,6 +25,24 @@ export const UserRepository = {
     });
   },
 
+  async findByCpf(cpf: string) {
+    return await prisma.usuario.findUnique({
+      where: { cpf },
+    });
+  },
+
+  async findByRg(rg: string) {
+    return await prisma.usuario.findUnique({
+      where: { rg },
+    });
+  },
+
+  async findByCnh(cnh: string) {
+    return await prisma.usuario.findUnique({
+      where: { cnh },
+    });
+  },
+
   async update(id: string, data: any) {
     return await prisma.usuario.update({
       where: { id },

@@ -41,6 +41,7 @@ model Veiculo {
   valor          Float
   cor            String
   quilometragem  Int
+  vendido        Boolean      @default(false)
   tipo           TipoVeiculo
   sistema        Sistema
   combustivel    Combustivel? @default(gasolina)
@@ -54,7 +55,6 @@ model Veiculo {
   valorEntrada   Float?
   valorVenda     Float?
   infoAdicionais String?
-  vendido        Boolean      @default(false)
   usuarioId      String?
   usuario        Usuario?     @relation(fields: [usuarioId], references: [id])
   createdAt      DateTime     @default(now())

@@ -13,9 +13,18 @@ export const VeiculosService = {
       veiculoData.placa
     );
     if (existingVeiculo) {
-      throw new ConflictError("Veículo já cadastrado");
+      throw new ConflictError("Placa já cadastrada");
     }
-    veiculoData.imagem = "Sem imagem";
+
+    if (veiculoData.codigoCRV) {
+      const existingCodigoCRV = await VeiculosRepository.findByCodigoCRV(
+        veiculoData.codigoCRV
+      );
+      if (existingCodigoCRV) {
+        throw new ConflictError("Codigo CRV já cadastrado");
+      }
+    }
+
     if (file) {
       const newFileName = `${veiculoData.placa}-${file.originalname}`;
       veiculoData.imagem = await uploadFile(

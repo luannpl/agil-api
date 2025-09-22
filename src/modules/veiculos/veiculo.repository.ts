@@ -51,6 +51,12 @@ export const VeiculosRepository = {
     });
   },
 
+  async findByCodigoCRV(codigoCRV: string) {
+    return await prisma.veiculo.findUnique({
+      where: { codigoCRV },
+    });
+  },
+
   async delete(id: number) {
     return await prisma.veiculo.delete({
       where: { id },

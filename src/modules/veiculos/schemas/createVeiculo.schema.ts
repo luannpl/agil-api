@@ -40,13 +40,12 @@ export const CreateVeiculoSchema = z.object({
       required_error: "Cor é obrigatória",
     })
     .min(1, "Cor deve ter no mínimo 1 caracteres"),
-  localizacao: z.string().optional(),
   quilometragem: z.coerce
     .number({
       required_error: "Quilometragem é obrigatória",
     })
     .min(0, "Quilometragem deve ser maior ou igual a 0"),
-  vendido: z
+  vendido: z.coerce
     .boolean({
       required_error: "Vendido é obrigatório",
     })
@@ -63,5 +62,14 @@ export const CreateVeiculoSchema = z.object({
     required_error: "Combustível é obrigatório",
     invalid_type_error: "Combustível inválido",
   }),
+  localizacao: z.string().optional(),
   imagem: z.string().optional(),
+  codigoCRV: z.string().optional(),
+  seguro: z.coerce.boolean().default(false),
+  rastreador: z.coerce.boolean().default(false),
+  transferido: z.coerce.boolean().default(false),
+  regularizado: z.coerce.boolean().default(false),
+  valorEntrada: z.coerce.number().optional(),
+  valorVenda: z.coerce.number().optional(),
+  infoAdicionais: z.string().optional(),
 });

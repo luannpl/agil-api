@@ -32,25 +32,33 @@ model Usuario {
 }
 
 model Veiculo {
-  id            Int          @id @default(autoincrement())
-  nome          String
-  descricao     String
-  marca         String
-  ano           Int
-  placa         String       @unique
-  valor         Float
-  cor           String
-  quilometragem Int
-  tipo          TipoVeiculo
-  sistema       Sistema
-  imagem        String
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  usuarioId     String?
-  vendido       Boolean      @default(false)
-  combustivel   Combustivel? @default(gasolina)
-  localizacao   String?      @default("Fortaleza")
-  usuario       Usuario?     @relation(fields: [usuarioId], references: [id])
+  id             Int          @id @default(autoincrement())
+  nome           String
+  descricao      String
+  marca          String
+  ano            Int
+  placa          String       @unique
+  valor          Float
+  cor            String
+  quilometragem  Int
+  tipo           TipoVeiculo
+  sistema        Sistema
+  combustivel    Combustivel? @default(gasolina)
+  localizacao    String?      @default("Fortaleza")
+  imagem         String
+  codigoCRV      String?      @unique
+  seguro         Boolean      @default(false)
+  rastreador     Boolean      @default(false)
+  transferido    Boolean      @default(false)
+  regularizado   Boolean      @default(false)
+  valorEntrada   Float?
+  valorVenda     Float?
+  infoAdicionais String?
+  vendido        Boolean      @default(false)
+  usuarioId      String?
+  usuario        Usuario?     @relation(fields: [usuarioId], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 
   @@map("agil_veiculos")
 }
@@ -61,9 +69,9 @@ model Contato {
   email     String
   telefone  String?
   mensagem  String
+  lida      Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  lida      Boolean  @default(false)
 
   @@map("agil_contatos")
 }

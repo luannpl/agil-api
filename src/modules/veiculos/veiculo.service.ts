@@ -41,8 +41,12 @@ export const VeiculosService = {
     return veiculo;
   },
 
-  async getAllVeiculos() {
-    const veiculos = await VeiculosRepository.findAll();
+  async getAllVeiculos(filtros: {
+    cor?: string;
+    marca?: string;
+    valorMax?: number;
+  }) {
+    const veiculos = await VeiculosRepository.findAll(filtros);
     return veiculos;
   },
 

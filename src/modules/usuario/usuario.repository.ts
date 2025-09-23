@@ -13,6 +13,15 @@ export const UserRepository = {
     return await prisma.usuario.findMany();
   },
 
+  async findFuncionarios() {
+  return await prisma.usuario.findMany({
+    where: {
+      tipo: { in: ['admin', 'vendedor'] }
+    }
+  });
+},
+
+
   async findById(id: string) {
     return await prisma.usuario.findUnique({
       where: { id },

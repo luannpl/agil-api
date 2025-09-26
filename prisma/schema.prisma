@@ -52,6 +52,7 @@ model Veiculo {
   rastreador     Boolean      @default(false)
   transferido    Boolean      @default(false)
   regularizado   Boolean      @default(false)
+  quitado        Boolean      @default(false)
   valorEntrada   Float?
   valorVenda     Float?
   infoAdicionais String?

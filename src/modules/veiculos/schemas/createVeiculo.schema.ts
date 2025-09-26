@@ -69,6 +69,7 @@ export const CreateVeiculoSchema = z.object({
   rastreador: z.coerce.boolean().default(false),
   transferido: z.coerce.boolean().default(false),
   regularizado: z.coerce.boolean().default(false),
+  quitado: z.coerce.boolean().default(false),
   valorEntrada: z.coerce.number().optional(),
   valorVenda: z.coerce.number().optional(),
   infoAdicionais: z.string().optional(),

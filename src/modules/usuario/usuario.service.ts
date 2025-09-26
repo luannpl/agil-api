@@ -43,6 +43,13 @@ export const UserService = {
     return userWithoutPassword;
   },
 
+  async getFuncionarios() {
+    const funcionarios = await UserRepository.findFuncionarios();
+    return funcionarios.map(
+      ({ senha, ...userWithoutPassword }) => userWithoutPassword
+    );
+  },
+
   async getUserById(userId: string) {
     const user = await UserRepository.findById(userId);
     if (!user) {

@@ -15,6 +15,7 @@ router.post(
 );
 router.get("/", authenticate, UserController.getAllUsers);
 router.get("/me", authenticate, UserController.getMe);
+router.get("/funcionarios", UserController.getFuncionarios);
 router.get("/:id", authenticate, UserController.getUserById);
 router.put(
   "/",

@@ -19,9 +19,17 @@ export const VeiculosController = {
       res.status(500).json({ error: error.message || "Internal Server Error" });
     }
   },
-  async getAllVeiculos(_: Request, res: Response) {
+  async getAllVeiculos(req: Request, res: Response) {
     try {
-      const veiculos = await VeiculosService.getAllVeiculos();
+      const { cor, marca, valorMax } = req.query;
+
+      const filtros = {
+        cor: cor as string | undefined,
+        marca: marca as string | undefined,
+        valorMax: valorMax ? Number(valorMax) : undefined,
+      };
+
+      const veiculos = await VeiculosService.getAllVeiculos(filtros);
       res.status(200).json(veiculos);
     } catch (error: any) {
       if (error instanceof HttpError) {

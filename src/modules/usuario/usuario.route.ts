@@ -4,6 +4,7 @@ import { CreateUserSchema } from "./schemas/createUser.schema.js";
 import { UserController } from "./usuario.controller.js";
 import { authenticate } from "../../middlewares/authenticate.js";
 import { UpdateUserSchema } from "./schemas/updateUser.schema.js";
+import { ChangePasswordSchema } from "./schemas/changePassword.schema.js";
 
 const router = Router();
 
@@ -22,6 +23,12 @@ router.put(
   authenticate,
   validate(UpdateUserSchema),
   UserController.updateUser
+);
+router.patch(
+  "/password",
+  authenticate,
+  validate(ChangePasswordSchema),
+  UserController.changePassword
 );
 router.delete("/:id", authenticate, UserController.deleteUser);
 

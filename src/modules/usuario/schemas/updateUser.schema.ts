@@ -8,6 +8,5 @@ export const UpdateUserSchema = z.object({
     .string()
     .min(1, "Telefone deve ter no mínimo 1 caracteres")
     .optional(),
-  senha: z.string().min(6, "Senha deve ter no mínimo 6 caracteres").optional(),
   tipo: z.nativeEnum(TipoUsuario).optional(),
 });

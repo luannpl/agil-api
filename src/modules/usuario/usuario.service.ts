@@ -1,6 +1,11 @@
-import { ConflictError, NotFoundError } from "../../errors/HttpErrors.js";
+import {
+  ConflictError,
+  NotFoundError,
+  UnauthorizedError,
+} from "../../errors/HttpErrors.js";
 import { User } from "../../types/User.js";
-import { hashPassword } from "../../utils/hash.js";
+import { ChangePasswordDto } from "./dto/changePassword.dto.js";
+import { comparePassword, hashPassword } from "../../utils/hash.js";
 import { CreateUserDto } from "./dto/createUser.dto.js";
 import { UpdateUserDto } from "./dto/updateUser.dto.js";
 import { UserRepository } from "./usuario.repository.js";
@@ -70,8 +75,27 @@ export const UserService = {
         throw new ConflictError("Email já cadastrado");
       }
     }
-    data.senha = data.senha ? await hashPassword(data.senha) : user.senha;
     const updatedUser = await UserRepository.update(userId, data);
+    const { senha, ...userWithoutPassword } = updatedUser;
+    return userWithoutPassword;
+  },
+
+  async changePassword(userId: string, data: ChangePasswordDto) {
+    const user = await UserRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundError("User não encontrado");
+    }
+    const isPasswordCorrect = await comparePassword(
+      data.oldPassword!,
+      user.senha
+    );
+    if (!isPasswordCorrect) {
+      throw new UnauthorizedError("Senha antiga incorreta");
+    }
+    const newPassword = await hashPassword(data.newPassword!);
+    const updatedUser = await UserRepository.update(userId, {
+      senha: newPassword,
+    });
     const { senha, ...userWithoutPassword } = updatedUser;
     return userWithoutPassword;
   },

@@ -31,7 +31,10 @@ export const CreateUserSchema = z.object({
   cpf: z
     .string()
     .optional()
-    .refine((val) => !val || /^\d{11}$/.test(val), "CPF deve ter 11 números"),
+    .refine(
+      (val) => !val || /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(val),
+      "CPF inválido"
+    ),
 
   rg: z.string().optional(),
 

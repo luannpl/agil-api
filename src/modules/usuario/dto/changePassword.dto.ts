@@ -1,5 +1,4 @@
-export interface ChangePasswordDto {
-  oldPassword?: string;
-  newPassword?: string;
-  confirmNewPassword?: string;
-}
+import z from "zod";
+import { ChangePasswordSchema } from "../schemas/changePassword.schema";
+
+export type ChangePasswordDto = z.infer<typeof ChangePasswordSchema>;

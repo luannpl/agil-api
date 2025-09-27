@@ -86,17 +86,17 @@ export const UserService = {
       throw new NotFoundError("User não encontrado");
     }
     const isPasswordCorrect = await comparePassword(
-      data.oldPassword!,
+      data.senhaAtual!,
       user.senha
     );
     if (!isPasswordCorrect) {
       throw new UnauthorizedError("Senha antiga incorreta");
     }
-    const newPassword = await hashPassword(data.newPassword!);
-    const updatedUser = await UserRepository.update(userId, {
-      senha: newPassword,
+    const novaSenha = await hashPassword(data.novaSenha!);
+    const usuarioAtualizado = await UserRepository.update(userId, {
+      senha: novaSenha,
     });
-    const { senha, ...userWithoutPassword } = updatedUser;
+    const { senha, ...userWithoutPassword } = usuarioAtualizado;
     return userWithoutPassword;
   },
 

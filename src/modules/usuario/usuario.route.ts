@@ -25,7 +25,7 @@ router.put(
   UserController.updateUser
 );
 router.patch(
-  "/password",
+  "/alterar-senha",
   authenticate,
   validate(ChangePasswordSchema),
   UserController.changePassword

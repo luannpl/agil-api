@@ -92,7 +92,7 @@ model Contrato {
   descricaoEntrada        String
   usuarioId               String
   veiculoId               Int
-  Usuario                 Usuario  @relation(fields: [usuarioId], references: [id])
+  usuario                 Usuario  @relation(fields: [usuarioId], references: [id])
   veiculo                 Veiculo  @relation(fields: [veiculoId], references: [id])
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt

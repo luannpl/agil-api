@@ -7,6 +7,11 @@ export const ContratoRepository = {
   },
 
   async getAllContratos() {
-    return await prisma.contrato.findMany();
+    return await prisma.contrato.findMany({
+      include: {
+        usuario: true,
+        veiculo: true,
+      },
+    });
   },
 };

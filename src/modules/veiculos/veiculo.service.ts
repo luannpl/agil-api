@@ -41,6 +41,14 @@ export const VeiculosService = {
     return veiculo;
   },
 
+  async buscarPorPlaca(placa: string) {
+    const veiculo = await VeiculosRepository.findByPlaca(placa);
+    if (!veiculo) {
+      throw new NotFoundError("Veículo não encontrado");
+    }
+    return veiculo;
+  },
+
   async getAllVeiculos(filtros: {
     cor?: string;
     marca?: string;

@@ -19,6 +19,21 @@ export const VeiculosController = {
       res.status(500).json({ error: error.message || "Internal Server Error" });
     }
   },
+
+  async buscarPorPlaca(req: Request, res: Response) {
+    try {
+      const { placa } = req.body;
+      const veiculo = await VeiculosService.buscarPorPlaca(placa);
+      res.status(200).json(veiculo);
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
+
   async getAllVeiculos(req: Request, res: Response) {
     try {
       const { cor, marca, valorMax } = req.query;

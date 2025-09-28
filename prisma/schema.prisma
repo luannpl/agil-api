@@ -8,6 +8,19 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model Contato {
+  id        String   @id @default(uuid())
+  nome      String
+  email     String
+  telefone  String?
+  mensagem  String
+  lida      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("agil_contatos")
+}
+
 model Usuario {
   id          String      @id @default(uuid())
   nome        String
@@ -27,6 +40,7 @@ model Usuario {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   Veiculo     Veiculo[]
+  Contratos   Contrato[]
 
   @@map("agil_usuarios")
 }
@@ -58,23 +72,32 @@ model Veiculo {
   infoAdicionais String?
   usuarioId      String?
   usuario        Usuario?     @relation(fields: [usuarioId], references: [id])
+  contratos      Contrato[]
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 
   @@map("agil_veiculos")
 }
 
-model Contato {
-  id        String   @id @default(uuid())
-  nome      String
-  email     String
-  telefone  String?
-  mensagem  String
-  lida      Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Contrato {
+  id                      String   @id @default(uuid())
+  banco                   String
+  valorTotalFinanciamento Float
+  dataPagamento           DateTime
+  valorParcela            Float
+  parcelaAtual            Int
+  totalParcelas           Int
+  status                  String
+  valorFinalEntrada       Float
+  descricaoEntrada        String
+  usuarioId               String
+  veiculoId               Int
+  Usuario                 Usuario  @relation(fields: [usuarioId], references: [id])
+  veiculo                 Veiculo  @relation(fields: [veiculoId], references: [id])
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
 
-  @@map("agil_contatos")
+  @@map("agil_contratos")
 }
 
 enum TipoUsuario {

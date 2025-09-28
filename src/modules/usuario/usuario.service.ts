@@ -67,7 +67,7 @@ export const UserService = {
   async getUserById(userId: string) {
     const user = await UserRepository.findById(userId);
     if (!user) {
-      throw new NotFoundError("User não encontrado");
+      throw new NotFoundError("Usuário não encontrado");
     }
     const { senha, ...userWithoutPassword } = user;
     return userWithoutPassword;

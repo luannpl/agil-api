@@ -5,6 +5,7 @@ import { UserController } from "./usuario.controller.js";
 import { authenticate } from "../../middlewares/authenticate.js";
 import { UpdateUserSchema } from "./schemas/updateUser.schema.js";
 import { ChangePasswordSchema } from "./schemas/changePassword.schema.js";
+import { searchCliente } from "./schemas/searchCliente.schema.js";
 
 const router = Router();
 
@@ -13,6 +14,12 @@ router.post(
   authenticate,
   validate(CreateUserSchema),
   UserController.createUser
+);
+router.post(
+  "/cliente",
+  authenticate,
+  validate(searchCliente),
+  UserController.searchCliente
 );
 router.get("/", authenticate, UserController.getAllUsers);
 router.get("/me", authenticate, UserController.getMe);

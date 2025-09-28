@@ -55,6 +55,15 @@ export const UserService = {
     );
   },
 
+  async searchCliente(cpf: string) {
+    const cliente = await UserRepository.findByCpf(cpf);
+    if (!cliente) {
+      throw new NotFoundError("Cliente não encontrado");
+    }
+    const { senha, ...userWithoutPassword } = cliente;
+    return userWithoutPassword;
+  },
+
   async getUserById(userId: string) {
     const user = await UserRepository.findById(userId);
     if (!user) {

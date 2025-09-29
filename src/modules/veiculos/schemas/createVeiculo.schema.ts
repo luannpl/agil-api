@@ -1,6 +1,12 @@
 import { Combustivel, Sistema, TipoVeiculo } from "@prisma/client";
 import z from "zod";
 
+const booleanSchema = z.preprocess((val) => {
+  if (val === "true" || val === true) return true;
+  if (val === "false" || val === false) return false;
+  return false;
+}, z.boolean());
+
 export const CreateVeiculoSchema = z.object({
   nome: z
     .string({
@@ -45,11 +51,7 @@ export const CreateVeiculoSchema = z.object({
       required_error: "Quilometragem é obrigatória",
     })
     .min(0, "Quilometragem deve ser maior ou igual a 0"),
-  vendido: z.coerce
-    .boolean({
-      required_error: "Vendido é obrigatório",
-    })
-    .default(false),
+  vendido: booleanSchema.default(false),
   tipo: z.nativeEnum(TipoVeiculo, {
     required_error: "Tipo de veículo é obrigatório",
     invalid_type_error: "Tipo de veículo inválido",
@@ -65,11 +67,11 @@ export const CreateVeiculoSchema = z.object({
   localizacao: z.string().optional(),
   imagem: z.string().optional(),
   codigoCRV: z.string().optional(),
-  seguro: z.coerce.boolean().default(false),
-  rastreador: z.coerce.boolean().default(false),
-  transferido: z.coerce.boolean().default(false),
-  regularizado: z.coerce.boolean().default(false),
-  quitado: z.coerce.boolean().default(false),
+  seguro: booleanSchema.default(false),
+  rastreador: booleanSchema.default(false),
+  transferido: booleanSchema.default(false),
+  regularizado: booleanSchema.default(false),
+  quitado: booleanSchema.default(false),
   valorEntrada: z.coerce.number().optional(),
   valorVenda: z.coerce.number().optional(),
   infoAdicionais: z.string().optional(),

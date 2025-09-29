@@ -26,4 +26,10 @@ export const ContratoRepository = {
       where: { id },
     });
   },
+
+  async findByVeiculoId(veiculoId: number) {
+    return await prisma.contrato.findMany({
+      where: { veiculoId },
+    });
+  },
 };

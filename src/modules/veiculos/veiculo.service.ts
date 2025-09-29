@@ -2,6 +2,7 @@ import { VeiculosRepository } from "./veiculo.repository.js";
 import { CreateVeiculoDto } from "./dto/createVeiculo.dto.js";
 import { ConflictError, NotFoundError } from "../../errors/HttpErrors.js";
 import { deleteFile, uploadFile } from "../../lib/supabaseStorage.js";
+import { ContratoRepository } from "../contratos/contrato.repository.js";
 
 export const VeiculosService = {
   async createVeiculo(
@@ -99,6 +100,14 @@ export const VeiculosService = {
     if (!veiculo) {
       throw new NotFoundError("Veículo não encontrado");
     }
+
+    const contratos = await ContratoRepository.findByVeiculoId(id);
+    if (contratos.length > 0) {
+      throw new ConflictError(
+        "Este veículo está associado a um ou mais contratos e não pode ser excluído."
+      );
+    }
+
     if (veiculo.imagem && veiculo.imagem !== "Sem imagem") {
       const fileUrl = veiculo.imagem;
       const filePath = fileUrl.split("/veiculos/")[1];

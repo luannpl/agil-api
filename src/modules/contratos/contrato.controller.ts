@@ -57,6 +57,27 @@ export const ContratoController = {
     }
   },
 
+  async updateStatusPagamentosByContratoId(req: Request, res: Response) {
+    try {
+      const { id, idPagamento } = req.params;
+      const { status } = req.body;
+
+      const updatePagamento =
+        await ContratoService.updateStatusPagamentosByContratoId(
+          id,
+          idPagamento,
+          status
+        );
+      res.status(201).json(updatePagamento);
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
+
   async deleteContrato(req: Request, res: Response) {
     try {
       const { id } = req.params;

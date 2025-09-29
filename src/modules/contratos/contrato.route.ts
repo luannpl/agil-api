@@ -15,5 +15,15 @@ ContratosRoutes.post(
 
 ContratosRoutes.get("/", authenticate, ContratoController.getAllContratos);
 ContratosRoutes.get("/:id", authenticate, ContratoController.getContratoById);
-ContratosRoutes.get("/:id/pagamentos", authenticate, ContratoController.getPagamentosByContratoId);
+ContratosRoutes.get(
+  "/:id/pagamentos",
+  authenticate,
+  ContratoController.getPagamentosByContratoId
+);
+ContratosRoutes.patch(
+  "/:id/pagamentos/:idPagamento/status",
+  authenticate,
+  ContratoController.updateStatusPagamentosByContratoId
+);
+
 ContratosRoutes.delete("/:id", authenticate, ContratoController.deleteContrato);

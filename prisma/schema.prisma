@@ -80,7 +80,7 @@ model Veiculo {
 }
 
 model Contrato {
-  id                      String   @id @default(uuid())
+  id                      String      @id @default(uuid())
   banco                   String
   valorTotalFinanciamento Float
   dataPagamento           DateTime
@@ -92,12 +92,26 @@ model Contrato {
   descricaoEntrada        String
   usuarioId               String
   veiculoId               Int
-  usuario                 Usuario  @relation(fields: [usuarioId], references: [id])
-  veiculo                 Veiculo  @relation(fields: [veiculoId], references: [id])
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  usuario                 Usuario     @relation(fields: [usuarioId], references: [id])
+  veiculo                 Veiculo     @relation(fields: [veiculoId], references: [id])
+  pagamentos              Pagamento[]
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
 
   @@map("agil_contratos")
+}
+model Pagamento {
+  id             String          @id @default(uuid())
+  valorParcela   Float
+  numeroParcela  Int
+  dataVencimento DateTime
+  status         StatusPagamento @default(PENDENTE)
+  contratoId     String
+  contrato       Contrato        @relation(fields: [contratoId], references: [id], onDelete: Cascade)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("agil_pagamentos")
 }
 
 enum TipoUsuario {
@@ -132,4 +146,12 @@ enum Combustivel {
   flex
   hibrido
   eletrico @map("elétrico")
+}
+
+
+
+enum StatusPagamento {
+  PENDENTE
+  PAGO
+  ATRASADO
 }

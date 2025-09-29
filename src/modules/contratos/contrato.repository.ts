@@ -24,6 +24,10 @@ export const ContratoRepository = {
   async findById(id: string) {
     return await prisma.contrato.findUnique({
       where: { id },
+      include:{
+        usuario: true,
+        veiculo: true,
+      }
     });
   },
 

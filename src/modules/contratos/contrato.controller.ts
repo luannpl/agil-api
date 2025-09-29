@@ -43,6 +43,20 @@ export const ContratoController = {
     }
   },
 
+  async getPagamentosByContratoId(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const pagamentos = await ContratoService.getPagamentosByContratoId(id);
+      res.status(200).json(pagamentos);
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
+
   async deleteContrato(req: Request, res: Response) {
     try {
       const { id } = req.params;

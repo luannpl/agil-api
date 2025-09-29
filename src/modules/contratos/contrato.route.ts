@@ -15,4 +15,5 @@ ContratosRoutes.post(
 
 ContratosRoutes.get("/", authenticate, ContratoController.getAllContratos);
 ContratosRoutes.get("/:id", authenticate, ContratoController.getContratoById);
+ContratosRoutes.get("/:id/pagamentos", authenticate, ContratoController.getPagamentosByContratoId);
 ContratosRoutes.delete("/:id", authenticate, ContratoController.deleteContrato);

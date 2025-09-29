@@ -14,4 +14,16 @@ export const ContratoRepository = {
       },
     });
   },
+
+  async delete(id: string) {
+    return await prisma.contrato.delete({
+      where: { id },
+    });
+  },
+
+  async findById(id: string) {
+    return await prisma.contrato.findUnique({
+      where: { id },
+    });
+  },
 };

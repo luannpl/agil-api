@@ -28,4 +28,32 @@ export const ContratoController = {
       res.status(500).json({ error: error.message || "Internal Server Error" });
     }
   },
+
+  async getContratoById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const contrato = await ContratoService.getContratoById(id);
+      res.status(200).json(contrato);
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
+
+  async deleteContrato(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      await ContratoService.deleteContrato(id);
+      res.status(204).send();
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
 };

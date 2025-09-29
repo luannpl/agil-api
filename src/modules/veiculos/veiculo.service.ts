@@ -71,6 +71,29 @@ export const VeiculosService = {
     return destaques;
   },
 
+  async updateVeiculo(id: number, data: Partial<CreateVeiculoDto>) {
+    const veiculo = await VeiculosRepository.findById(id);
+    if (!veiculo) {
+      throw new NotFoundError("Veículo não encontrado");
+    }
+    if (data.placa && data.placa !== veiculo.placa) {
+      const existingVeiculo = await VeiculosRepository.findByPlaca(data.placa);
+      if (existingVeiculo) {
+        throw new ConflictError("Placa já cadastrada");
+      }
+    }
+    if (data.codigoCRV && data.codigoCRV !== veiculo.codigoCRV) {
+      const existingCodigoCRV = await VeiculosRepository.findByCodigoCRV(
+        data.codigoCRV
+      );
+      if (existingCodigoCRV) {
+        throw new ConflictError("Codigo CRV já cadastrado");
+      }
+    }
+    const updatedVeiculo = await VeiculosRepository.update(id, data);
+    return updatedVeiculo;
+  },
+
   async deleteVeiculo(id: number) {
     const veiculo = await VeiculosRepository.findById(id);
     if (!veiculo) {

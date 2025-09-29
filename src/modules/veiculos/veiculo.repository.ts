@@ -79,6 +79,13 @@ export const VeiculosRepository = {
     });
   },
 
+  async update(id: number, data: any) {
+    return await prisma.veiculo.update({
+      where: { id },
+      data,
+    });
+  },
+
   async delete(id: number) {
     return await prisma.veiculo.delete({
       where: { id },

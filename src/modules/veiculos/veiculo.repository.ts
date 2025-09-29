@@ -91,4 +91,18 @@ export const VeiculosRepository = {
       where: { id },
     });
   },
+
+  async totalVeiculosEstoque() {
+    return await prisma.veiculo.count({ where: { vendido: false } });
+  },
+
+  async totalEstoqueEmValor() {
+    const result = await prisma.veiculo.aggregate({
+      _sum: {
+        valor: true,
+      },
+      where: { vendido: false },
+    });
+    return result._sum.valor || 0;
+  },
 };

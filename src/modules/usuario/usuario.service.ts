@@ -116,4 +116,8 @@ export const UserService = {
     }
     await UserRepository.delete(userId);
   },
+
+  async totalClientes() {
+    return await UserRepository.totalClientes();
+  },
 };

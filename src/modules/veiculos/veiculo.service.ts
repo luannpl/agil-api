@@ -116,4 +116,14 @@ export const VeiculosService = {
     }
     await VeiculosRepository.delete(id);
   },
+
+  async totalVeiculosEstoque() {
+    const total = await VeiculosRepository.totalVeiculosEstoque();
+    return total;
+  },
+
+  async totalEstoqueEmValor() {
+    const total = await VeiculosRepository.totalEstoqueEmValor();
+    return total;
+  },
 };

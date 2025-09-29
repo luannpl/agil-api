@@ -14,13 +14,12 @@ export const UserRepository = {
   },
 
   async findFuncionarios() {
-  return await prisma.usuario.findMany({
-    where: {
-      tipo: { in: ['admin', 'vendedor'] }
-    }
-  });
-},
-
+    return await prisma.usuario.findMany({
+      where: {
+        tipo: { in: ["admin", "vendedor"] },
+      },
+    });
+  },
 
   async findById(id: string) {
     return await prisma.usuario.findUnique({
@@ -63,5 +62,12 @@ export const UserRepository = {
     return await prisma.usuario.delete({
       where: { id },
     });
+  },
+
+  async totalClientes() {
+    const count = await prisma.usuario.count({
+      where: { tipo: "cliente" },
+    });
+    return count;
   },
 };

@@ -47,6 +47,7 @@ export const CreateContratoSchema = z.object({
     })
     .min(2)
     .max(255),
+  sinal: z.string().optional(),
   usuarioId: z
     .string({
       required_error: "O campo usuarioId é obrigatório",

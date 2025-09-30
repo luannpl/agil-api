@@ -46,7 +46,13 @@ export const CreateUserSchema = z.object({
     .refine((val) => !val || /^\d{5}-?\d{3}$/.test(val), "CEP inválido"),
 
   endereco: z.string().optional(),
+  bairro: z.string().optional(),
+  cidade: z.string().optional(),
+  estado: z.string().optional(),
   numero: z.string().optional(),
   complemento: z.string().optional(),
   descricao: z.string().optional(),
+  profissao: z.string().optional(),
+  estadoCivil: z.string().optional(),
+  nacionalidade: z.string().optional(),
 });

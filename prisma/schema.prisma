@@ -22,25 +22,31 @@ model Contato {
 }
 
 model Usuario {
-  id          String      @id @default(uuid())
-  nome        String
-  email       String      @unique
-  telefone    String?
-  senha       String
-  tipo        TipoUsuario
-  dataNasc    DateTime?
-  cpf         String?     @unique
-  rg          String?     @unique
-  cnh         String?     @unique
-  cep         String?
-  endereco    String?
-  numero      String?
-  complemento String?
-  descricao   String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  Veiculo     Veiculo[]
-  Contratos   Contrato[]
+  id            String      @id @default(uuid())
+  nome          String
+  email         String      @unique
+  telefone      String?
+  senha         String
+  tipo          TipoUsuario
+  dataNasc      DateTime?
+  cpf           String?     @unique
+  rg            String?     @unique
+  cnh           String?     @unique
+  cep           String?
+  endereco      String?
+  bairro        String?
+  cidade        String?
+  estado        String?
+  numero        String?
+  complemento   String?
+  descricao     String?
+  profissao     String?
+  estadoCivil   String?
+  nacionalidade String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Veiculo       Veiculo[]
+  Contratos     Contrato[]
 
   @@map("agil_usuarios")
 }
@@ -90,6 +96,7 @@ model Contrato {
   status                  String
   valorFinalEntrada       Float
   descricaoEntrada        String
+  sinal                   String      @default("Sem sinal")
   usuarioId               String
   veiculoId               Int
   usuario                 Usuario     @relation(fields: [usuarioId], references: [id])
@@ -100,6 +107,7 @@ model Contrato {
 
   @@map("agil_contratos")
 }
+
 model Pagamento {
   id             String          @id @default(uuid())
   valorParcela   Float
@@ -147,8 +155,6 @@ enum Combustivel {
   hibrido
   eletrico @map("elétrico")
 }
-
-
 
 enum StatusPagamento {
   PENDENTE

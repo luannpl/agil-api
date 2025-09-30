@@ -105,4 +105,25 @@ export const VeiculosRepository = {
     });
     return result._sum.valor || 0;
   },
+
+  async marcasMaisVendidas() {
+    const result = await prisma.veiculo.groupBy({
+      by: ["marca"],
+      _count: {
+        marca: true,
+      },
+      where: { vendido: true },
+      orderBy: {
+        _count: {
+          marca: "desc",
+        },
+      },
+      take: 5,
+    });
+
+    return result.map((item) => ({
+      marca: item.marca,
+      totalVendidos: item._count.marca,
+    }));
+  },
 };

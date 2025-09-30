@@ -126,4 +126,8 @@ export const VeiculosService = {
     const total = await VeiculosRepository.totalEstoqueEmValor();
     return total;
   },
+
+  async marcasMaisVendidas() {
+    return await VeiculosRepository.marcasMaisVendidas();
+  },
 };

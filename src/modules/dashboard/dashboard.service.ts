@@ -9,11 +9,15 @@ export const DashboardService = {
       totalEstoqueEmValor,
       totalClientes,
       totalContratosMes,
+      ultimasVendas,
+      marcasMaisVendidas,
     ] = await Promise.all([
       VeiculosService.totalVeiculosEstoque(),
       VeiculosService.totalEstoqueEmValor(),
       UserService.totalClientes(),
       ContratoService.totalContratosMes(),
+      ContratoService.ultimasVendas(),
+      VeiculosService.marcasMaisVendidas(),
     ]);
 
     return {
@@ -21,6 +25,8 @@ export const DashboardService = {
       totalEstoqueEmValor,
       totalClientes,
       totalContratosMes,
+      ultimasVendas,
+      marcasMaisVendidas,
     };
   },
 };

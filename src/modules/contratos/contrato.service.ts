@@ -95,4 +95,8 @@ export const ContratoService = {
   async totalContratosMes() {
     return await ContratoRepository.totalContratosMes();
   },
+
+  async ultimasVendas() {
+    return await ContratoRepository.ultimasVendas();
+  },
 };

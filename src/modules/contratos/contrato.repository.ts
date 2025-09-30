@@ -58,4 +58,25 @@ export const ContratoRepository = {
 
     return total;
   },
+
+  async ultimasVendas() {
+    return await prisma.contrato.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      include: {
+        usuario: {
+          select: {
+            id: true,
+            nome: true,
+          },
+        },
+        veiculo: {
+          select: {
+            id: true,
+            nome: true,
+          },
+        },
+      },
+    });
+  },
 };

@@ -91,6 +91,7 @@ export const UserController = {
         throw new UnauthorizedError("Usuário não autenticado");
       }
       const user = await UserService.updateUser(req.user.id, req.body);
+      console.log("Usuário atualizado:", user);
       res.status(200).json(user);
     } catch (error: any) {
       if (error instanceof HttpError) {

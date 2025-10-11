@@ -109,10 +109,7 @@ export const VeiculosService = {
     }
 
     if (veiculo.imagem && veiculo.imagem !== "Sem imagem") {
-      const fileUrl = veiculo.imagem;
-      const filePath = fileUrl.split("/veiculos/")[1];
-
-      await deleteFile("veiculos", filePath);
+      await deleteFile("veiculos", veiculo.imagem);
     }
     await VeiculosRepository.delete(id);
   },

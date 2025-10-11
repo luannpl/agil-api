@@ -1,7 +1,7 @@
 import { VeiculosRepository } from "./veiculo.repository.js";
 import { CreateVeiculoDto } from "./dto/createVeiculo.dto.js";
 import { ConflictError, NotFoundError } from "../../errors/HttpErrors.js";
-import { deleteFile, uploadFile } from "../../lib/supabaseStorage.js";
+import { deleteFile, uploadFile } from "../../lib/r2Storage.js";
 import { ContratoRepository } from "../contratos/contrato.repository.js";
 
 export const VeiculosService = {

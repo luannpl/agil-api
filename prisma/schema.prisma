@@ -66,7 +66,7 @@ model Veiculo {
   sistema        Sistema
   combustivel    Combustivel? @default(gasolina)
   localizacao    String?      @default("Fortaleza")
-  imagem         String
+  imagens        ImagemVeiculo[]
   codigoCRV      String?      @unique
   seguro         Boolean      @default(false)
   rastreador     Boolean      @default(false)
@@ -83,6 +83,17 @@ model Veiculo {
   updatedAt      DateTime     @updatedAt
 
   @@map("agil_veiculos")
+}
+
+model ImagemVeiculo {
+  id        Int      @id @default(autoincrement())
+  url       String
+  veiculoId Int
+  veiculo   Veiculo  @relation(fields: [veiculoId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("agil_imagem_veiculos")
 }
 
 model Contrato {

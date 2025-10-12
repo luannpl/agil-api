@@ -5,6 +5,10 @@ export const VeiculosRepository = {
     return await prisma.veiculo.create({ data });
   },
 
+  async createImagens(data: { url: string; veiculoId: number }[]) {
+    return await prisma.imagemVeiculo.createMany({ data });
+  },
+
   async findAll(filtros: { cor?: string; marca?: string; valorMax?: number }) {
     const where: any = {};
 
@@ -30,6 +34,12 @@ export const VeiculosRepository = {
     return await prisma.veiculo.findMany({
       where,
       include: {
+        imagens: {
+          select: {
+            id: true,
+            url: true,
+          },
+        },
         usuario: {
           select: {
             id: true,
@@ -47,6 +57,12 @@ export const VeiculosRepository = {
     return await prisma.veiculo.findUnique({
       where: { id },
       include: {
+        imagens: {
+          select: {
+            id: true,
+            url: true,
+          },
+        },
         usuario: {
           select: {
             id: true,
@@ -64,6 +80,14 @@ export const VeiculosRepository = {
     return await prisma.veiculo.findMany({
       orderBy: [{ valor: "desc" }, { ano: "desc" }],
       take: 4,
+      include: {
+        imagens: {
+          select: {
+            id: true,
+            url: true,
+          },
+        },
+      },
     });
   },
 
@@ -87,6 +111,9 @@ export const VeiculosRepository = {
   },
 
   async delete(id: number) {
+    await prisma.imagemVeiculo.deleteMany({
+      where: { veiculoId: id },
+    });
     return await prisma.veiculo.delete({
       where: { id },
     });

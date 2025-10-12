@@ -11,7 +11,7 @@ export const VeiculosRoutes = Router();
 VeiculosRoutes.post(
   "/",
   authenticate,
-  upload.single("imagem"),
+  upload.array("imagens"),
   validate(CreateVeiculoSchema),
   VeiculosController.createVeiculo
 );

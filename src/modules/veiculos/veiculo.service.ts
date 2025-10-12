@@ -8,7 +8,7 @@ export const VeiculosService = {
   async createVeiculo(
     veiculoData: CreateVeiculoDto,
     usuarioId: string,
-    file?: Express.Multer.File
+    files?: Express.Multer.File[]
   ) {
     const existingVeiculo = await VeiculosRepository.findByPlaca(
       veiculoData.placa
@@ -26,19 +26,27 @@ export const VeiculosService = {
       }
     }
 
-    if (file) {
-      const newFileName = `${veiculoData.placa}-${file.originalname}`;
-      veiculoData.imagem = await uploadFile(
-        "veiculos",
-        newFileName,
-        file.buffer,
-        file.mimetype
-      );
-    }
     const veiculo = await VeiculosRepository.create({
       ...veiculoData,
       usuarioId,
     });
+
+    if (files && files.length > 0) {
+      const imagens = await Promise.all(
+        files.map(async (file) => {
+          const newFileName = `${veiculoData.placa}-${file.originalname}`;
+          const url = await uploadFile(
+            "veiculos",
+            newFileName,
+            file.buffer,
+            file.mimetype
+          );
+          return { url, veiculoId: veiculo.id };
+        })
+      );
+      await VeiculosRepository.createImagens(imagens);
+    }
+
     return veiculo;
   },
 
@@ -108,8 +116,12 @@ export const VeiculosService = {
       );
     }
 
-    if (veiculo.imagem && veiculo.imagem !== "Sem imagem") {
-      await deleteFile("veiculos", veiculo.imagem);
+    if (veiculo.imagens && veiculo.imagens.length > 0) {
+      await Promise.all(
+        veiculo.imagens.map(async (imagem) => {
+          await deleteFile("veiculos", imagem.url);
+        })
+      );
     }
     await VeiculosRepository.delete(id);
   },

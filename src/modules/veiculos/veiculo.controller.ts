@@ -8,7 +8,7 @@ export const VeiculosController = {
       const veiculo = await VeiculosService.createVeiculo(
         req.body,
         req.user!.id,
-        req.file as Express.Multer.File | undefined
+        req.files as Express.Multer.File[] | undefined
       );
       res.status(201).json(veiculo);
     } catch (error: any) {

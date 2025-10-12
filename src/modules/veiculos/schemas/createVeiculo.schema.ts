@@ -65,7 +65,6 @@ export const CreateVeiculoSchema = z.object({
     invalid_type_error: "Combustível inválido",
   }),
   localizacao: z.string().optional(),
-  imagem: z.string().optional(),
   codigoCRV: z.string().optional(),
   seguro: booleanSchema.default(false),
   rastreador: booleanSchema.default(false),

@@ -52,35 +52,35 @@ model Usuario {
 }
 
 model Veiculo {
-  id             Int          @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   nome           String
   descricao      String
   marca          String
   ano            Int
-  placa          String       @unique
+  placa          String          @unique
   valor          Float
   cor            String
   quilometragem  Int
-  vendido        Boolean      @default(false)
+  vendido        Boolean         @default(false)
   tipo           TipoVeiculo
   sistema        Sistema
-  combustivel    Combustivel? @default(gasolina)
-  localizacao    String?      @default("Fortaleza")
+  combustivel    Combustivel?    @default(gasolina)
+  localizacao    String?         @default("Fortaleza")
   imagens        ImagemVeiculo[]
-  codigoCRV      String?      @unique
-  seguro         Boolean      @default(false)
-  rastreador     Boolean      @default(false)
-  transferido    Boolean      @default(false)
-  regularizado   Boolean      @default(false)
-  quitado        Boolean      @default(false)
+  codigoCRV      String?         @unique
+  seguro         Boolean         @default(false)
+  rastreador     Boolean         @default(false)
+  transferido    Boolean         @default(false)
+  regularizado   Boolean         @default(false)
+  quitado        Boolean         @default(false)
   valorEntrada   Float?
   valorVenda     Float?
   infoAdicionais String?
   usuarioId      String?
-  usuario        Usuario?     @relation(fields: [usuarioId], references: [id])
+  usuario        Usuario?        @relation(fields: [usuarioId], references: [id])
   contratos      Contrato[]
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
   @@map("agil_veiculos")
 }
@@ -120,15 +120,16 @@ model Contrato {
 }
 
 model Pagamento {
-  id             String          @id @default(uuid())
-  valorParcela   Float
-  numeroParcela  Int
-  dataVencimento DateTime
-  status         StatusPagamento @default(PENDENTE)
-  contratoId     String
-  contrato       Contrato        @relation(fields: [contratoId], references: [id], onDelete: Cascade)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id                  String          @id @default(uuid())
+  valorParcela        Float
+  valorParcelaInicial Float
+  numeroParcela       Int
+  dataVencimento      DateTime
+  status              StatusPagamento @default(PENDENTE)
+  contratoId          String
+  contrato            Contrato        @relation(fields: [contratoId], references: [id], onDelete: Cascade)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
 
   @@map("agil_pagamentos")
 }

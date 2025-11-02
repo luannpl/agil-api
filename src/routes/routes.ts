@@ -5,6 +5,7 @@ import UserRoutes from "../modules/usuario/usuario.route.js";
 import { ContatoRouter } from "../modules/contato/contato.route.js";
 import { ContratosRoutes } from "../modules/contratos/contrato.route.js";
 import { DashboardRoutes } from "../modules/dashboard/dashboard.route.js";
+import { PagamentosRoutes } from "../modules/contratos/pagamentos/pagamento.route.js";
 
 const v1Router = express.Router();
 
@@ -14,5 +15,6 @@ v1Router.use("/veiculos", VeiculosRoutes);
 v1Router.use("/contratos", ContratosRoutes);
 v1Router.use("/contato", ContatoRouter);
 v1Router.use("/dashboard", DashboardRoutes);
+v1Router.use("/pagamentos", PagamentosRoutes);
 
 export default v1Router;

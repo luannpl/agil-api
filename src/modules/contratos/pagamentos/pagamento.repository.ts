@@ -21,4 +21,17 @@ export const PagamentoRepository = {
       data: { status },
     });
   },
+
+  async update(
+    id: string,
+    data: Partial<{
+      valorParcela: number;
+      status: StatusPagamento;
+    }>
+  ) {
+    return await prisma.pagamento.update({
+      where: { id },
+      data,
+    });
+  },
 };

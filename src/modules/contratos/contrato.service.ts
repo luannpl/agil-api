@@ -21,13 +21,14 @@ export const ContratoService = {
         data: { vendido: true },
       });
 
-      const dataContrato = novoContrato.createdAt;
+      const dataContrato = new Date(novoContrato.dataPagamento);
 
       const pagamentosData = [];
       for (let i = 1; i <= novoContrato.totalParcelas; i++) {
         const dataVencimento = addMonthsAndHandleLastDay(dataContrato, i);
         pagamentosData.push({
           valorParcela: novoContrato.valorParcela,
+          valorParcelaInicial: novoContrato.valorParcela,
           numeroParcela: i,
           dataVencimento: dataVencimento,
           status: StatusPagamento.PENDENTE,

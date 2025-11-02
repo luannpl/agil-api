@@ -77,6 +77,12 @@ export const ContratoService = {
       pagamentoId,
       status
     );
+    if (updatePagamento) {
+      const parcelaAtual = contrato.parcelaAtual || 0;
+      await ContratoRepository.updateContrato(contratoId, {
+        parcelaAtual: parcelaAtual + 1,
+      });
+    }
     return updatePagamento;
   },
 

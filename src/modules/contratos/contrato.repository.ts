@@ -37,6 +37,13 @@ export const ContratoRepository = {
     });
   },
 
+  async updateContrato(id: string, data: Partial<CreateContratoDto>) {
+    return await prisma.contrato.update({
+      where: { id },
+      data,
+    });
+  },
+
   async totalContratosMes() {
     const startOfMonth = new Date();
     startOfMonth.setDate(1);

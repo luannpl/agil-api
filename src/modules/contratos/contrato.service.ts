@@ -65,7 +65,7 @@ export const ContratoService = {
       throw new BadRequestError("Contrato não encontrado");
     }
     const pagamentos = await PagamentoService.getPagamentosByContratoId(id);
-    return pagamentos;
+    return { pagamentos, contrato };
   },
 
   async updateStatusPagamentosByContratoId(

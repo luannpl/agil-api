@@ -32,7 +32,7 @@ export const VeiculosRepository = {
       };
     }
     return await prisma.veiculo.findMany({
-      where,
+      where: { ...where, vendido: false },
       include: {
         imagens: {
           select: {
@@ -88,6 +88,7 @@ export const VeiculosRepository = {
           },
         },
       },
+      where: { vendido: false },
     });
   },
 

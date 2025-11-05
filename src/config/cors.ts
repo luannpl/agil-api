@@ -3,7 +3,7 @@ import { CorsOptions } from "cors";
 const allowedOrigins = [
   "http://localhost:3000",
   "https://agil-app-five.vercel.app",
-  "https://www.agilconsultoriaautomotiva.com.br/",
+  "https://www.agilconsultoriaautomotiva.com.br",
 ];
 
 export const corsOptions: CorsOptions = {

@@ -139,4 +139,10 @@ export const VeiculosService = {
   async marcasMaisVendidas() {
     return await VeiculosRepository.marcasMaisVendidas();
   },
+
+  async getEstoqueMetrics() {
+    const { totalVeiculosEstoque, totalEstoqueEmValor } =
+      await VeiculosRepository.getEstoqueMetrics();
+    return { totalVeiculosEstoque, totalEstoqueEmValor };
+  },
 };

@@ -86,4 +86,9 @@ export const ContratoRepository = {
       },
     });
   },
+  async getContratoMetrics() {
+    const totalContratosMes = await this.totalContratosMes();
+    const ultimasVendas = await this.ultimasVendas();
+    return { totalContratosMes, ultimasVendas };
+  },
 };

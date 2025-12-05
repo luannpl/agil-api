@@ -106,4 +106,10 @@ export const ContratoService = {
   async ultimasVendas() {
     return await ContratoRepository.ultimasVendas();
   },
+
+  async getContratoMetrics() {
+    const { totalContratosMes, ultimasVendas } =
+      await ContratoRepository.getContratoMetrics();
+    return { totalContratosMes, ultimasVendas };
+  },
 };

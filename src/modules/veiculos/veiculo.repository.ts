@@ -154,4 +154,18 @@ export const VeiculosRepository = {
       totalVendidos: item._count.marca,
     }));
   },
+
+  async getEstoqueMetrics() {
+    const totalVeiculosEstoque = await prisma.veiculo.count({
+      where: { vendido: false },
+    });
+    const result = await prisma.veiculo.aggregate({
+      _sum: {
+        valor: true,
+      },
+      where: { vendido: false },
+    });
+    const totalEstoqueEmValor = result._sum.valor || 0;
+    return { totalVeiculosEstoque, totalEstoqueEmValor };
+  },
 };

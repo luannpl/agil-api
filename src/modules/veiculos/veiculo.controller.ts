@@ -54,6 +54,28 @@ export const VeiculosController = {
       res.status(500).json({ error: error.message || "Internal Server Error" });
     }
   },
+
+  async getDisponiveis(req: Request, res: Response) {
+    try {
+      const { cor, marca, valorMax } = req.query;
+
+      const filtros = {
+        cor: cor as string | undefined,
+        marca: marca as string | undefined,
+        valorMax: valorMax ? Number(valorMax) : undefined,
+      };
+
+      const veiculos = await VeiculosService.getDisponiveis(filtros);
+      res.status(200).json(veiculos);
+    } catch (error: any) {
+      if (error instanceof HttpError) {
+        res.status(error.status).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  },
+
   async getVeiculoById(req: Request, res: Response) {
     try {
       const veiculo = await VeiculosService.getVeiculoById(+req.params.id);

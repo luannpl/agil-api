@@ -32,7 +32,55 @@ export const VeiculosRepository = {
       };
     }
     return await prisma.veiculo.findMany({
-      where: { ...where, vendido: false },
+      where: { ...where },
+      include: {
+        imagens: {
+          select: {
+            id: true,
+            url: true,
+          },
+        },
+        usuario: {
+          select: {
+            id: true,
+            nome: true,
+            email: true,
+            telefone: true,
+            tipo: true,
+          },
+        },
+      },
+    });
+  },
+
+  async findDisponiveis(filtros: {
+    cor?: string;
+    marca?: string;
+    valorMax?: number;
+  }) {
+    const where: any = { vendido: false };
+
+    if (filtros.cor) {
+      where.cor = {
+        equals: filtros.cor,
+        mode: "insensitive",
+      };
+    }
+
+    if (filtros.marca) {
+      where.marca = {
+        equals: filtros.marca,
+        mode: "insensitive",
+      };
+    }
+
+    if (filtros.valorMax) {
+      where.valor = {
+        lte: filtros.valorMax,
+      };
+    }
+    return await prisma.veiculo.findMany({
+      where: { ...where },
       include: {
         imagens: {
           select: {

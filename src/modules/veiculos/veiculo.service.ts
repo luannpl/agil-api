@@ -67,6 +67,15 @@ export const VeiculosService = {
     return veiculos;
   },
 
+  async getDisponiveis(filtros: {
+    cor?: string;
+    marca?: string;
+    valorMax?: number;
+  }) {
+    const veiculos = await VeiculosRepository.findDisponiveis(filtros);
+    return veiculos;
+  },
+
   async getVeiculoById(id: number) {
     const veiculo = await VeiculosRepository.findById(id);
     if (!veiculo) {

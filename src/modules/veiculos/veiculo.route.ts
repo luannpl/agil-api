@@ -22,6 +22,7 @@ VeiculosRoutes.post(
   VeiculosController.buscarPorPlaca
 );
 VeiculosRoutes.get("/", VeiculosController.getAllVeiculos);
+VeiculosRoutes.get("/disponiveis", VeiculosController.getDisponiveis);
 VeiculosRoutes.get("/destaques", VeiculosController.getDestaques);
 VeiculosRoutes.get("/:id", VeiculosController.getVeiculoById);
 VeiculosRoutes.delete("/:id", authenticate, VeiculosController.deleteVeiculo);

@@ -9,6 +9,7 @@ import { comparePassword, hashPassword } from "../../utils/hash.js";
 import { CreateUserDto } from "./dto/createUser.dto.js";
 import { UpdateUserDto } from "./dto/updateUser.dto.js";
 import { UserRepository } from "./usuario.repository.js";
+import { cleanField } from "../../utils/cleanField.js";
 
 export const UserService = {
   async createUser(data: CreateUserDto) {
@@ -16,6 +17,9 @@ export const UserService = {
     if (existingUser) {
       throw new ConflictError("Email já cadastrado");
     }
+    data.cpf = cleanField(data.cpf);
+    data.rg = cleanField(data.rg);
+    data.cnh = cleanField(data.cnh);
     if (data.cpf && (await UserRepository.findByCpf(data.cpf))) {
       throw new ConflictError("CPF já cadastrado");
     }

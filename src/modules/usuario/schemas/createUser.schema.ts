@@ -30,15 +30,25 @@ export const CreateUserSchema = z.object({
 
   cpf: z
     .string()
+    .transform((v) => v?.trim())
     .optional()
+    .nullable()
     .refine(
       (val) => !val || /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(val),
       "CPF inválido"
     ),
 
-  rg: z.string().optional(),
+  rg: z
+    .string()
+    .transform((v) => v?.trim())
+    .optional()
+    .nullable(),
 
-  cnh: z.string().optional(),
+  cnh: z
+    .string()
+    .transform((v) => v?.trim())
+    .optional()
+    .nullable(),
 
   cep: z
     .string()
